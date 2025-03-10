@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <head>
     <title>my english learning site</title>
+    <link rel="icon" type="image/jpg" href="icon.jpg">
 </head>
 <body>
-<h1><pre>  the:</pre></h1>
+<header>
+    <div id="header_box"></div>
+    <nav>
+        <a href="http://127.0.0.1:5500/index.html" id="home">ホーム</a>
+        <input type="search" id="search" placeholder="検索">
+        <a id="result"></a>
+        <span id="buttun"><button type="button"><img src="3550614.png" height="35px"></button></span>
+    </nav>
+</header>
+<br  id="the">
+<br>
+<br>
+<span class="big" ><h1><pre><big><strong> the:</strong></big></pre></h1></span>
     <ol>
         <dl>
             <dt>
@@ -16,7 +29,7 @@ Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
                 </h2></pre>
                 <pre><h2>
 Open <big>the</big> door(window) .
- そこのドア(窓)を開けて。
+<big>そこ</big>のドア(窓)を開けて。
                 </h2></pre>
                 <pre><h2>
 I went to the station. <big>The</big> trains were cool.
@@ -24,7 +37,41 @@ I went to the station. <big>The</big> trains were cool.
                 </h2></pre>
             </dd>
         </dl>
-        
+<br>
+<hr>
+<br>
+        <dl>
+            <dt>
+                <h1><li><pre>  空、海、風、天候(形容詞がない場合（例：A cold wind / A chill rain /etc...以外)のみ）</pre></li></h1>
+            </dt>
+            <dd><del>
+                <pre><h2>
+Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
+    たかしは家でパンを作った。       たかしは<big>その</big>パンを食べた。
+                </h2></pre>
+                <pre><h2>
+Open <big>the</big> door(window) .
+<big>そこ</big>のドア(窓)を開けて。
+                </h2></pre>
+                <pre><h2>
+I went to the station. <big>The</big> trains were cool.
+ 　  駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。
+
+                </h2></pre>
+            </dd>
+        </dl>
+    </ol>
+</del>
+<del>
+<br  id="be">
+<br>
+<hr>
+<hr>
+<hr>
+<br>
+<br>
+<span class="big" ><h1><pre><big><strong> be:</strong></big></pre></h1></span>
+    <ol>
         <dl>
             <dt>
                 <h2><li><pre>  文脈から何を指しているかわかる場合(「その」）</pre></li></h2>
@@ -36,7 +83,29 @@ Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
                 </h2></pre>
                 <pre><h2>
 Open <big>the</big> door(window) .
- そこのドア(窓)を開けて。
+<big>そこ</big>のドア(窓)を開けて。
+                </h2></pre>
+                <pre><h2>
+I went to the station. <big>The</big> trains were cool.
+ 　  駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。
+                </h2></pre>
+            </dd>
+        </dl>
+<br>
+<hr>
+<br>
+        <dl>
+            <dt>
+                <h1><li><pre>  空、海、風、天候(形容詞がない場合（例：A cold wind / A chill rain /etc...以外)のみ）</pre></li></h1>
+            </dt>
+            <dd>
+                <pre><h2>
+Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
+    たかしは家でパンを作った。       たかしは<big>その</big>パンを食べた。
+                </h2></pre>
+                <pre><h2>
+Open <big>the</big> door(window) .
+<big>そこ</big>のドア(窓)を開けて。
                 </h2></pre>
                 <pre><h2>
 I went to the station. <big>The</big> trains were cool.
@@ -45,4 +114,90 @@ I went to the station. <big>The</big> trains were cool.
             </dd>
         </dl>
     </ol>
+</del>
 </body>
+<style>
+    body{
+        overflow-x: hidden;
+    }
+    span{
+        font-size: x-large;
+    }
+    p{
+        font-size: larger;
+        color: rgb(0, 0, 0);
+        position: absolute;
+        margin-top: -52px;
+        margin-left: 150px;
+        text-decoration: none;
+    }
+    header{
+        position: fixed;
+    }
+    #header_box{
+        width:1500px;
+        height:80px;
+        margin-top: -10px;
+        margin-left: -50px;
+        background-color: rgb(13, 13, 110);
+        box-shadow: 0px 0px 10px black; 
+    }
+    #home{
+        font-size: larger;
+        color: white;
+        position: absolute;
+        margin-top: -52px;
+        margin-left: 150px;
+        text-decoration: none;
+    }
+    #search{
+        font-size: medium;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: rgb(0, 0, 0);
+        position: absolute;
+        margin-top: -55px;
+        margin-left: 300px;
+    }
+    #buttun{
+        position: absolute;
+        filter: invert(50);
+        margin-top: -58px;
+        margin-left: 500px;
+    }
+    button{
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+    a#result{
+        padding-left: 5px;
+        width: 195.5px;
+        border: 1px solid black;
+        position:absolute;
+        background-color: white;
+        color: black;
+        margin-top: -25px;
+        margin-left: 299px;
+        z-index: 5;
+    }
+</style>
+<script>
+    function butotnClick(){
+    msg.innerText = nameText.value;
+    msg.href = `#${nameText.value}`;
+    }
+    function linkClick(){
+    msg.innerText = "";
+    }
+
+    let nameText = document.getElementById('search');
+    let msg = document.getElementById('result');
+
+    let checkButton = document.getElementById('buttun');
+    checkButton.addEventListener('click', butotnClick); 
+
+    let linkButton = document.getElementById('result');
+    linkButton.addEventListener('click', linkClick); 
+</script>
+</html>
