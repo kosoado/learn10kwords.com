@@ -2,6 +2,8 @@
 <head>
     <title>my english learning site</title>
     <link rel="icon" type="image/jpg" href="icon.jpg">
+    <meta name="viewport" content="width=100, initial-scale=0.08">
+    <meta charset="utf-8">
 </head>
 <body>
 <header>
@@ -24,16 +26,16 @@
             </dt>
             <dd>
                 <pre><h2>
-Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
-    たかしは家でパンを作った。       たかしは<big>その</big>パンを食べた。
-                </h2></pre>
+Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.</h2>
+<h3>        たかしは家でパンを作った。                 たかしは<big>その</big>パンを食べた。</h3> 
+                </pre>
                 <pre><h2>
-Open <big>the</big> door(window) .
-<big>そこ</big>のドア(窓)を開けて。
-                </h2></pre>
+Open <big>the</big> door(window) .</h2>
+<h3><big>  そこ</big>のドア(窓)を開けて。</h3>
+                </pre>
                 <pre><h2>
 I went to the station. <big>The</big> trains were cool.
- 　  駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。
+　  <h3>駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。</h3>
                 </h2></pre>
             </dd>
         </dl>
@@ -42,12 +44,12 @@ I went to the station. <big>The</big> trains were cool.
 <br>
         <dl>
             <dt>
-                <h1><li><pre>  空、海、風、天候(形容詞がない場合（例：A cold wind / A chill rain /etc...以外)のみ）</pre></li></h1>
+                <h1><li><pre id="The-2">  空、海、風、天候(形容詞がない場合（例：A cold wind / A chill rain /etc...以外)のみ）</pre></li></h1>
             </dt>
-            <dd><del>
+            <dd>
                 <pre><h2>
-Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
-    たかしは家でパンを作った。       たかしは<big>その</big>パンを食べた。
+ I like <big>the</big> stars.       <mark>違:I like stars.</mark>
+    <h3>私は空に瞬く星が好きです。    <mark> 私は星が好きです(星全般が)</h3></mark>
                 </h2></pre>
                 <pre><h2>
 Open <big>the</big> door(window) .
@@ -61,13 +63,15 @@ I went to the station. <big>The</big> trains were cool.
             </dd>
         </dl>
     </ol>
-</del>
-<del>
 <br  id="be">
+<br>
+<br>
 <br>
 <hr>
 <hr>
 <hr>
+<br>
+<br>
 <br>
 <br>
 <span class="big" ><h1><pre><big><strong> be:</strong></big></pre></h1></span>
@@ -178,7 +182,7 @@ I went to the station. <big>The</big> trains were cool.
         background-color: white;
         color: black;
         margin-top: -25px;
-        margin-left: 299px;
+        margin-left: 300px;
         z-index: 5;
     }
 </style>
@@ -190,6 +194,9 @@ I went to the station. <big>The</big> trains were cool.
     function linkClick(){
     msg.innerText = "";
     }
+    function enterkeypress(event){
+        butotnClick();
+    }
 
     let nameText = document.getElementById('search');
     let msg = document.getElementById('result');
@@ -199,5 +206,10 @@ I went to the station. <big>The</big> trains were cool.
 
     let linkButton = document.getElementById('result');
     linkButton.addEventListener('click', linkClick); 
+
+    let search = document.getElementById('search');
+    search.addEventListener('keydown', enterkeypress); 
+
+
 </script>
 </html>
