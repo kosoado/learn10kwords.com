@@ -1,221 +1,393 @@
 <!DOCTYPE html>
+<html lang="ja">
 <head>
-    <title>my english learning site</title>
-    <link rel="icon" type="image/jpg" href="icon.jpg">
-    <meta name="viewport" content="width=100, initial-scale=0.08">
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Ranker - 勉強時間ランキング</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        .active-tab { border-bottom: 2px solid #3b82f6; color: #3b82f6; }
+    </style>
 </head>
 <body>
-<header>
-    <div id="header_box"></div>
-    <nav>
-        <a href="http://127.0.0.1:5500/index.html" id="home">ホーム</a>
-        <input type="search" id="search" placeholder="検索">
-        <a id="result"></a>
-        <span id="buttun"><button type="button"><img src="3550614.png" height="35px"></button></span>
-    </nav>
-</header>
-<br  id="the">
-<br>
-<br>
-<span class="big" ><h1><pre><big><strong> the:</strong></big></pre></h1></span>
-    <ol>
-        <dl>
-            <dt>
-                <h2><li><pre>  文脈から何を指しているかわかる場合(「その」）</pre></li></h2>
-            </dt>
-            <dd>
-                <pre><h2>
-Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.</h2>
-<h3>        たかしは家でパンを作った。                 たかしは<big>その</big>パンを食べた。</h3> 
-                </pre>
-                <pre><h2>
-Open <big>the</big> door(window) .</h2>
-<h3><big>  そこ</big>のドア(窓)を開けて。</h3>
-                </pre>
-                <pre><h2>
-I went to the station. <big>The</big> trains were cool.
-　  <h3>駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。</h3>
-                </h2></pre>
-            </dd>
-        </dl>
-<br>
-<hr>
-<br>
-        <dl>
-            <dt>
-                <h1><li><pre id="The-2">  空、海、風、天候(形容詞がない場合（例：A cold wind / A beautiful sky /etc...以外)のみ）</pre></li></h1>
-            </dt>
-            <dd>
-                <pre><h2>
- I like <big>the</big> stars.           <mark>似:I like stars.</mark>
-    <h3>私は空に瞬く星が好きです。    <mark> 私は星が好きです(天文学的に星全般が)</h3></mark>
-                </h2></pre>
-                <pre><h2>
-    Look up <span id="dif">in</span> <big>the</big> sky.          <mark>似:Look up <span id="dif">at</span> the sky. There's a bird.</mark>
-<h3>空を見上げてごらん。<span id="dif">(全体を見つめる)</span>         <mark> 空を見て。鳥がいるよ。<span id="dif">(一点を見つめる)</span></h3></mark>
-                </h2></pre>
-                <pre><h2>
-Takashi is climbing <span id="dif">the</span> mountain.                  <mark>似:Takashi is climbing <span id="dif">a</span> mountain.</mark>
-<h3>たかしは山に登っています。<span id="dif">(特定の山を指す)</span>                        <mark>たかしは山に登っています。<span id="dif">(世界中のどこかの)</span></mark></h3>
+    <div id="app" class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
+        
+        <header class="bg-blue-600 text-white p-4 flex justify-between items-center sticky top-0 z-10">
+            <h1 class="text-lg font-bold">📚 Study Ranker</h1>
+            <div v-if="user">
+                <button @click="logout" class="text-xs bg-blue-800 px-2 py-1 rounded">ログアウト</button>
+            </div>
+        </header>
 
-                </h2></pre>
-            </dd>
-        </dl>
-    </ol>
-<br  id="be">
-<br>
-<br>
-<br>
-<hr>
-<hr>
-<hr>
-<br>
-<br>
-<br>
-<br>
-<del
-<span class="big" ><h1><pre><big><strong> be:</strong></big></pre></h1></span>
-    <ol>
-        <dl>
-            <dt>
-                <h2><li><pre>  文脈から何を指しているかわかる場合(「その」）</pre></li></h2>
-            </dt>
-            <dd>
-                <pre><h2>
-Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
-    たかしは家でパンを作った。       たかしは<big>その</big>パンを食べた。
-                </h2></pre>
-                <pre><h2>
-Open <big>the</big> door(window) .
-<big>そこ</big>のドア(窓)を開けて。
-                </h2></pre>
-                <pre><h2>
-I went to the station. <big>The</big> trains were cool.
- 　  駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。
-                </h2></pre>
-            </dd>
-        </dl>
-<br>
-<hr>
-<br>
-        <dl>
-            <dt>
-                <h1><li><pre>  空、海、風、天候(形容詞がない場合（例：A cold wind / A chill rain /etc...以外)のみ）</pre></li></h1>
-            </dt>
-            <dd>
-                <pre><h2>
-Takashi made a bread at his home . <big>The</big> bread was eaten by Takshi.
-    たかしは家でパンを作った。       たかしは<big>その</big>パンを食べた。
-                </h2></pre>
-                <pre><h2>
-Open <big>the</big> door(window) .
-<big>そこ</big>のドア(窓)を開けて。
-                </h2></pre>
-                <pre><h2>
-I went to the station. <big>The</big> trains were cool.
- 　  駅に行きました。<big>そこ</big>にあった電車はかっこよかったです。
-                </h2></pre>
-            </dd>
-        </dl>
-    </ol>
-</del>
+        <div v-if="!user" class="p-8 text-center flex flex-col justify-center h-[80vh]">
+            <h2 class="text-2xl font-bold mb-4">仲間と競って勉強しよう</h2>
+            <p class="text-gray-600 mb-8">個人ランキング、チーム対抗戦で<br>モチベーションを維持。</p>
+            <button @click="login" class="bg-white border border-gray-300 p-3 rounded shadow hover:bg-gray-50 flex items-center justify-center gap-2">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6">
+                Googleでログイン
+            </button>
+        </div>
+
+        <div v-else>
+            <div class="flex border-b bg-white sticky top-14 z-10">
+                <button @click="currentTab = 'timer'" :class="{'active-tab': currentTab === 'timer'}" class="flex-1 py-3 text-center font-medium text-gray-500">⏱ タイマー</button>
+                <button @click="currentTab = 'ranking'" :class="{'active-tab': currentTab === 'ranking'}" class="flex-1 py-3 text-center font-medium text-gray-500">🏆 ランキング</button>
+                <button @click="currentTab = 'team'" :class="{'active-tab': currentTab === 'team'}" class="flex-1 py-3 text-center font-medium text-gray-500">🤝 チーム</button>
+            </div>
+
+            <div class="p-4 pb-20">
+                
+                <div v-if="currentTab === 'timer'" class="text-center mt-10">
+                    <div class="text-6xl font-mono font-bold mb-8 text-gray-800">
+                        {{ formatTime(timerSeconds) }}
+                    </div>
+                    
+                    <div class="flex justify-center gap-4 mb-8">
+                        <button v-if="!timerActive" @click="startTimer" class="w-24 h-24 rounded-full bg-blue-500 text-white text-xl shadow-lg hover:bg-blue-600 transition">開始</button>
+                        <button v-else @click="stopTimer" class="w-24 h-24 rounded-full bg-orange-500 text-white text-xl shadow-lg hover:bg-orange-600 transition">停止</button>
+                    </div>
+
+                    <button v-if="timerSeconds > 0 && !timerActive" @click="saveStudyTime" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold shadow hover:bg-green-700">
+                        記録を保存する
+                    </button>
+
+                    <div class="mt-8 p-4 bg-blue-50 rounded text-left">
+                        <p class="text-sm text-gray-600">あなたの今週の勉強時間</p>
+                        <p class="text-2xl font-bold text-blue-800">{{ formatMinutesToHrs(myWeeklyTime) }}</p>
+                    </div>
+                </div>
+
+                <div v-if="currentTab === 'ranking'">
+                    <div class="flex gap-2 mb-4 justify-center">
+                        <button @click="rankingMode = 'solo'" :class="rankingMode === 'solo' ? 'bg-blue-600 text-white' : 'bg-gray-200'" class="px-4 py-1 rounded-full text-sm">個人</button>
+                        <button @click="rankingMode = 'team'" :class="rankingMode === 'team' ? 'bg-blue-600 text-white' : 'bg-gray-200'" class="px-4 py-1 rounded-full text-sm">チーム対抗</button>
+                    </div>
+
+                    <ul class="space-y-3">
+                        <li v-for="(ranker, index) in displayRanking" :key="index" class="bg-white p-3 rounded shadow flex items-center">
+                            <div class="w-8 text-xl font-bold" :class="index < 3 ? 'text-yellow-500' : 'text-gray-400'">#{{ index + 1 }}</div>
+                            <div class="flex-1">
+                                <div class="font-bold text-gray-800">{{ ranker.name }}</div>
+                                <div class="text-xs text-gray-500" v-if="ranker.members">{{ ranker.members }}人チーム</div>
+                            </div>
+                            <div class="font-mono font-bold text-blue-600">{{ formatMinutesToHrs(ranker.time) }}</div>
+                        </li>
+                    </ul>
+                    <p v-if="displayRanking.length === 0" class="text-center text-gray-400 mt-10">データがありません</p>
+                </div>
+
+                <div v-if="currentTab === 'team'">
+                    <div v-if="!myTeamId">
+                        <h3 class="font-bold mb-2">チームを作成または参加</h3>
+                        <div class="bg-white p-4 rounded shadow mb-4">
+                            <p class="text-sm mb-2">チームに参加 (IDを入力)</p>
+                            <div class="flex gap-2">
+                                <input v-model="joinTeamIdInput" type="text" placeholder="チームID" class="border p-2 rounded flex-1">
+                                <button @click="joinTeam" class="bg-blue-500 text-white px-4 rounded">参加</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <p class="text-sm mb-2">新しいチームを作る</p>
+                            <div class="flex gap-2">
+                                <input v-model="newTeamNameInput" type="text" placeholder="チーム名" class="border p-2 rounded flex-1">
+                                <button @click="createTeam" class="bg-green-500 text-white px-4 rounded">作成</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else>
+                        <div class="bg-blue-50 p-4 rounded mb-4">
+                            <h3 class="text-lg font-bold text-blue-800">{{ myTeamData?.name }}</h3>
+                            <p class="text-sm text-gray-500">チームID: {{ myTeamId }} (友達に教えよう)</p>
+                        </div>
+
+                        <h4 class="font-bold mb-2">メンバー ({{ teamMembers.length }}/4)</h4>
+                        <ul class="space-y-2">
+                            <li v-for="member in teamMembers" :key="member.uid" class="bg-white p-3 rounded shadow flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img :src="member.photoURL" class="w-8 h-8 rounded-full">
+                                    <span>{{ member.displayName }}</span>
+                                </div>
+                                <span class="font-mono text-sm">{{ formatMinutesToHrs(member.weeklyStudyTime) }}</span>
+                            </li>
+                        </ul>
+                        
+                        <button @click="leaveTeam" class="mt-8 w-full py-2 text-red-500 text-sm border border-red-200 rounded">チームを抜ける</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 【重要】Firebase設定: ここを自分の設定に書き換えてください
+        const firebaseConfig = {
+            apiKey: "AIzaSxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            authDomain: "study-ranking-xxxx.firebaseapp.com",
+            projectId: "study-ranking-xxxx",
+            storageBucket: "study-ranking-xxxx.appspot.com",
+            messagingSenderId: "00000000000",
+            appId: "1:00000000000:web:xxxxxxxxxxxxxx"
+        };
+
+        // Firebase初期化
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        const { createApp, ref, computed, onMounted, watch } = Vue;
+
+        createApp({
+            setup() {
+                const user = ref(null);
+                const currentTab = ref('timer');
+                const timerSeconds = ref(0);
+                const timerActive = ref(false);
+                const timerInterval = ref(null);
+                const myWeeklyTime = ref(0);
+                
+                // ランキング用
+                const rankingMode = ref('solo');
+                const soloRanking = ref([]);
+                const teamRanking = ref([]);
+
+                // チーム用
+                const myTeamId = ref(null);
+                const myTeamData = ref(null);
+                const teamMembers = ref([]);
+                const newTeamNameInput = ref('');
+                const joinTeamIdInput = ref('');
+
+                // --- 認証処理 ---
+                onMounted(() => {
+                    auth.onAuthStateChanged(async (u) => {
+                        user.value = u;
+                        if (u) {
+                            await loadUserData(u.uid);
+                            loadRankings(); // ログイン時にランキング読み込み
+                        }
+                    });
+                });
+
+                const login = () => {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    auth.signInWithPopup(provider);
+                };
+
+                const logout = () => auth.signOut();
+
+                // --- データ読み込み ---
+                const loadUserData = async (uid) => {
+                    const docRef = db.collection('users').doc(uid);
+                    const docSnap = await docRef.get();
+                    
+                    if (docSnap.exists) {
+                        const data = docSnap.data();
+                        myWeeklyTime.value = data.weeklyStudyTime || 0;
+                        myTeamId.value = data.teamId || null;
+                        if (data.teamId) loadTeamData(data.teamId);
+                    } else {
+                        // 初回データ作成
+                        await docRef.set({
+                            displayName: user.value.displayName,
+                            photoURL: user.value.photoURL,
+                            weeklyStudyTime: 0,
+                            teamId: null
+                        });
+                    }
+                };
+
+                // --- タイマー機能 ---
+                const startTimer = () => {
+                    if (timerActive.value) return;
+                    timerActive.value = true;
+                    timerInterval.value = setInterval(() => {
+                        timerSeconds.value++;
+                    }, 1000);
+                };
+
+                const stopTimer = () => {
+                    timerActive.value = false;
+                    clearInterval(timerInterval.value);
+                };
+
+                const saveStudyTime = async () => {
+                    const minutes = Math.floor(timerSeconds.value / 60);
+                    if (minutes < 1) {
+                        alert('1分未満は記録されません');
+                        timerSeconds.value = 0;
+                        return;
+                    }
+
+                    const uid = user.value.uid;
+                    const batch = db.batch();
+
+                    // 1. ユーザーの週間時間を加算
+                    const userRef = db.collection('users').doc(uid);
+                    batch.update(userRef, {
+                        weeklyStudyTime: firebase.firestore.FieldValue.increment(minutes)
+                    });
+
+                    // 2. チームの週間時間を加算 (所属していれば)
+                    if (myTeamId.value) {
+                        const teamRef = db.collection('teams').doc(myTeamId.value);
+                        batch.update(teamRef, {
+                            totalWeeklyTime: firebase.firestore.FieldValue.increment(minutes)
+                        });
+                    }
+
+                    await batch.commit();
+                    
+                    alert(`${minutes}分 記録しました！`);
+                    timerSeconds.value = 0;
+                    myWeeklyTime.value += minutes;
+                    loadRankings(); // ランキング再読み込み
+                };
+
+                // --- ランキング機能 ---
+                const loadRankings = async () => {
+                    // 個人ランキング
+                    const usersSnap = await db.collection('users')
+                        .orderBy('weeklyStudyTime', 'desc')
+                        .limit(20)
+                        .get();
+                    soloRanking.value = usersSnap.docs.map(doc => ({
+                        name: doc.data().displayName,
+                        time: doc.data().weeklyStudyTime
+                    }));
+
+                    // チームランキング
+                    const teamsSnap = await db.collection('teams')
+                        .orderBy('totalWeeklyTime', 'desc')
+                        .limit(20)
+                        .get();
+                    teamRanking.value = teamsSnap.docs.map(doc => ({
+                        name: doc.data().name,
+                        time: doc.data().totalWeeklyTime,
+                        members: doc.data().memberIds?.length || 0
+                    }));
+                };
+
+                const displayRanking = computed(() => {
+                    return rankingMode.value === 'solo' ? soloRanking.value : teamRanking.value;
+                });
+
+                // --- チーム機能 ---
+                const createTeam = async () => {
+                    if (!newTeamNameInput.value) return;
+                    const teamRef = db.collection('teams').doc(); // 自動ID
+                    
+                    await teamRef.set({
+                        name: newTeamNameInput.value,
+                        memberIds: [user.value.uid],
+                        totalWeeklyTime: myWeeklyTime.value // 作成者の時間を初期値に加算
+                    });
+
+                    await db.collection('users').doc(user.value.uid).update({
+                        teamId: teamRef.id
+                    });
+
+                    myTeamId.value = teamRef.id;
+                    loadTeamData(teamRef.id);
+                    alert('チームを作成しました！');
+                };
+
+                const joinTeam = async () => {
+                    const teamId = joinTeamIdInput.value;
+                    if (!teamId) return;
+
+                    const teamRef = db.collection('teams').doc(teamId);
+                    const teamSnap = await teamRef.get();
+
+                    if (!teamSnap.exists) {
+                        alert('チームが見つかりません');
+                        return;
+                    }
+                    if (teamSnap.data().memberIds.length >= 4) {
+                        alert('このチームは満員(4人)です');
+                        return;
+                    }
+
+                    // チームに参加
+                    await teamRef.update({
+                        memberIds: firebase.firestore.FieldValue.arrayUnion(user.value.uid),
+                        totalWeeklyTime: firebase.firestore.FieldValue.increment(myWeeklyTime.value)
+                    });
+                    
+                    await db.collection('users').doc(user.value.uid).update({
+                        teamId: teamId
+                    });
+
+                    myTeamId.value = teamId;
+                    loadTeamData(teamId);
+                    alert('チームに参加しました！');
+                };
+
+                const loadTeamData = async (teamId) => {
+                    const teamSnap = await db.collection('teams').doc(teamId).get();
+                    myTeamData.value = teamSnap.data();
+
+                    // メンバー詳細取得
+                    const members = [];
+                    for (const uid of teamSnap.data().memberIds) {
+                        const uSnap = await db.collection('users').doc(uid).get();
+                        members.push({ uid, ...uSnap.data() });
+                    }
+                    teamMembers.value = members;
+                };
+
+                const leaveTeam = async () => {
+                    if (!confirm('本当にチームを抜けますか？')) return;
+                    
+                    // チームから削除
+                    const teamRef = db.collection('teams').doc(myTeamId.value);
+                    await teamRef.update({
+                        memberIds: firebase.firestore.FieldValue.arrayRemove(user.value.uid),
+                        totalWeeklyTime: firebase.firestore.FieldValue.increment(-myWeeklyTime.value)
+                    });
+
+                    await db.collection('users').doc(user.value.uid).update({
+                        teamId: null
+                    });
+
+                    myTeamId.value = null;
+                    myTeamData.value = null;
+                    teamMembers.value = [];
+                    alert('チームを抜けました');
+                };
+
+                // ユーティリティ
+                const formatTime = (seconds) => {
+                    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+                    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+                    const s = (seconds % 60).toString().padStart(2, '0');
+                    return `${h}:${m}:${s}`;
+                };
+
+                const formatMinutesToHrs = (minutes) => {
+                    const h = Math.floor(minutes / 60);
+                    const m = minutes % 60;
+                    return `${h}時間${m}分`;
+                };
+
+                return {
+                    user, login, logout,
+                    currentTab,
+                    timerSeconds, timerActive, startTimer, stopTimer, saveStudyTime,
+                    myWeeklyTime,
+                    rankingMode, displayRanking,
+                    myTeamId, myTeamData, teamMembers, newTeamNameInput, joinTeamIdInput, createTeam, joinTeam, leaveTeam,
+                    formatTime, formatMinutesToHrs
+                };
+            }
+        }).mount('#app');
+    </script>
 </body>
-<style>
-    body{
-        overflow-x: hidden;
-    }
-    span{
-        font-size: x-large;
-    }
-    p{
-        font-size: larger;
-        color: rgb(0, 0, 0);
-        position: absolute;
-        margin-top: -52px;
-        margin-left: 150px;
-        text-decoration: none;
-    }
-    header{
-        position: fixed;
-    }
-    #header_box{
-        width:1500px;
-        height:80px;
-        margin-top: -10px;
-        margin-left: -50px;
-        background-color: rgb(13, 13, 110);
-        box-shadow: 0px 0px 10px black; 
-    }
-    #home{
-        font-size: larger;
-        color: white;
-        position: absolute;
-        margin-top: -52px;
-        margin-left: 150px;
-        text-decoration: none;
-    }
-    #dif{
-        font-size: larger;
-        color: rgb(0, 0, 114);
-        text-decoration: underline;
-    }
-    #search{
-        font-size: medium;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        color: rgb(0, 0, 0);
-        position: absolute;
-        margin-top: -55px;
-        margin-left: 300px;
-    }
-    #buttun{
-        position: absolute;
-        filter: invert(50);
-        margin-top: -58px;
-        margin-left: 500px;
-    }
-    button{
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-    }
-    a#result{
-        padding-left: 5px;
-        width: 195.5px;
-        border: 1px solid black;
-        position:absolute;
-        background-color: white;
-        color: black;
-        margin-top: -25px;
-        margin-left: 300px;
-        z-index: 5;
-    }
-</style>
-<script>
-    function butotnClick(){
-    msg.innerText = nameText.value;
-    msg.href = `#${nameText.value}`;
-    }
-    function linkClick(){
-    msg.innerText = "";
-    }
-    function enterkeypress(event){
-        butotnClick();
-    }
-
-    let nameText = document.getElementById('search');
-    let msg = document.getElementById('result');
-
-    let checkButton = document.getElementById('buttun');
-    checkButton.addEventListener('click', butotnClick); 
-
-    let linkButton = document.getElementById('result');
-    linkButton.addEventListener('click', linkClick); 
-
-    let search = document.getElementById('search');
-    search.addEventListener('keydown', enterkeypress); 
-
-
-</script>
 </html>
